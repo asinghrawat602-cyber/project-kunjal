@@ -1,0 +1,1074 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b20">
+    <title>Project Kunjal ♡</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg:#080b20;
+            --blue:#85d7ff;
+            --cyan:#62f3ff;
+            --pink:#ff9bd2;
+            --text:#f4f6ff;
+            --muted:#a0afd2;
+            --green:#79ffd1;
+            --red:#ff8fa8;
+        }
+
+        * { box-sizing:border-box; }
+
+        body {
+            margin:0;
+            min-height:100vh;
+            color:var(--text);
+            background:
+                    radial-gradient(ellipse at 12% 10%,#1c3264 0,transparent 40%),
+                    radial-gradient(ellipse at 90% 85%,#321742 0,transparent 42%),
+                    var(--bg);
+            font-family:'Outfit',sans-serif;
+            overflow-x:hidden;
+        }
+
+        body::before {
+            content:"";
+            position:fixed;
+            inset:0;
+            pointer-events:none;
+            opacity:.15;
+            background-image:
+                    linear-gradient(#85d7ff18 1px,transparent 1px),
+                    linear-gradient(90deg,#85d7ff18 1px,transparent 1px);
+            background-size:40px 40px;
+        }
+
+        .orb {
+            position:fixed;
+            width:240px;
+            height:240px;
+            border-radius:50%;
+            filter:blur(85px);
+            opacity:.18;
+            pointer-events:none;
+            animation:drift 9s ease-in-out infinite alternate;
+        }
+        .orb.one { background:#38bfff;top:-80px;left:-80px; }
+        .orb.two { background:#d64bff;right:-100px;bottom:-70px;animation-delay:-4s; }
+
+        .app {
+            position:relative;
+            z-index:1;
+            width:min(100% - 30px,620px);
+            min-height:100vh;
+            margin:auto;
+            padding:28px 0;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+        }
+
+        .topbar {
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:12px;
+            margin-bottom:20px;
+        }
+
+        .brand {
+            display:flex;
+            align-items:center;
+            gap:10px;
+            font-size:12px;
+            font-weight:700;
+            letter-spacing:2px;
+        }
+
+        .brand-icon {
+            width:36px;height:36px;
+            display:grid;
+            place-items:center;
+            border:1px solid #79caff60;
+            border-radius:12px;
+            color:var(--cyan);
+            background:#6cdfff10;
+            font-size:20px;
+        }
+
+        .status {
+            display:flex;
+            align-items:center;
+            gap:7px;
+            color:var(--green);
+            font-size:10px;
+            letter-spacing:1px;
+        }
+
+        .status-dot {
+            width:7px;height:7px;
+            border-radius:50%;
+            background:var(--green);
+            box-shadow:0 0 12px var(--green);
+            animation:blink 1.5s infinite;
+        }
+
+        .card {
+            position:relative;
+            padding:clamp(22px,6vw,40px);
+            border:1px solid #9bdfff2b;
+            border-radius:28px;
+            background:linear-gradient(145deg,#172044ef,#11142bf2);
+            box-shadow:0 25px 100px #0006,inset 0 1px #ffffff0d;
+            backdrop-filter:blur(24px);
+            overflow:hidden;
+        }
+
+        .card::before {
+            content:"";
+            position:absolute;
+            height:2px;
+            top:0;left:12%;right:12%;
+            background:linear-gradient(90deg,transparent,var(--cyan),var(--pink),transparent);
+        }
+
+        .eyebrow {
+            color:var(--cyan);
+            font-size:10px;
+            font-weight:700;
+            letter-spacing:3px;
+            text-transform:uppercase;
+        }
+
+        .center { text-align:center; }
+
+        .hero-icon {
+            width:76px;height:76px;
+            margin:24px auto;
+            display:grid;
+            place-items:center;
+            border:1px solid #8edbff50;
+            border-radius:24px;
+            background:linear-gradient(135deg,#6bd9ff20,#dc8cff20);
+            box-shadow:0 0 45px #60cfff15;
+            font-size:35px;
+            animation:float 4s ease-in-out infinite;
+        }
+
+        h1 {
+            margin:0 0 13px;
+            font-size:clamp(33px,8vw,49px);
+            line-height:1.1;
+            letter-spacing:-1.5px;
+        }
+
+        h1 span {
+            color:transparent;
+            background:linear-gradient(90deg,var(--cyan),#b3caff,var(--pink));
+            background-clip:text;
+            -webkit-background-clip:text;
+        }
+
+        h2 { font-size:25px;margin:12px 0; }
+
+        p {
+            color:var(--muted);
+            font-size:14px;
+            line-height:1.8;
+        }
+
+        .subtitle {
+            max-width:410px;
+            margin:0 auto 24px;
+            text-align:center;
+        }
+
+        .button {
+            width:100%;
+            min-height:52px;
+            padding:14px 18px;
+            border:1px solid #9ee9ff75;
+            border-radius:15px;
+            color:#081326;
+            background:linear-gradient(100deg,var(--cyan),var(--blue),#c9b8ff);
+            font:700 14px 'Outfit',sans-serif;
+            cursor:pointer;
+            transition:transform .2s,box-shadow .2s,filter .2s;
+        }
+
+        .button:hover {
+            transform:translateY(-2px);
+            box-shadow:0 8px 28px #62f3ff30;
+            filter:brightness(1.06);
+        }
+        .button:active { transform:scale(.98); }
+
+        .button.secondary {
+            color:var(--text);
+            border-color:#9bdfff35;
+            background:#a4cfff0c;
+        }
+
+        .input {
+            width:100%;
+            min-height:53px;
+            margin:8px 0 13px;
+            padding:15px 17px;
+            color:var(--text);
+            background:#070d22b8;
+            border:1px solid #85d7ff38;
+            border-radius:14px;
+            outline:none;
+            font:500 15px 'Outfit',sans-serif;
+            transition:border .2s,box-shadow .2s;
+        }
+
+        .input:focus {
+            border-color:var(--cyan);
+            box-shadow:0 0 0 3px #62f3ff13;
+        }
+        .input::placeholder { color:#7886ab; }
+
+        .progress-row {
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:10px;
+            margin:25px 0 9px;
+            color:var(--muted);
+            font-size:11px;
+        }
+
+        .progress-track {
+            height:5px;
+            overflow:hidden;
+            border-radius:20px;
+            background:#ffffff12;
+        }
+
+        .progress-fill {
+            height:100%;
+            width:0;
+            border-radius:20px;
+            background:linear-gradient(90deg,var(--cyan),var(--pink));
+            box-shadow:0 0 15px #62f3ff45;
+            transition:width .5s ease;
+        }
+
+        .question-tag {
+            display:inline-block;
+            margin-bottom:14px;
+            padding:7px 10px;
+            color:var(--cyan);
+            border:1px solid #62f3ff2a;
+            border-radius:9px;
+            background:#62f3ff0c;
+            font-size:10px;
+            letter-spacing:1.5px;
+        }
+
+        .question {
+            min-height:78px;
+            margin:0 0 10px;
+            font-size:clamp(25px,6vw,34px);
+            line-height:1.2;
+            letter-spacing:-.7px;
+        }
+
+        .feedback {
+            min-height:32px;
+            margin:8px 0 14px;
+            font-size:13px;
+            font-weight:600;
+        }
+        .feedback.good { color:var(--green); }
+        .feedback.bad { color:var(--red); }
+
+        .hidden { display:none !important; }
+        .fade-in { animation:fadeIn .5s ease both; }
+
+        /* NEW: full-screen-style sliding reveal */
+        #loveReveal {
+            position:relative;
+            isolation:isolate;
+        }
+
+        .slide-in {
+            animation:romanticSlide .95s cubic-bezier(.18,.8,.25,1) both;
+        }
+
+        #loveReveal::before {
+            content:"";
+            position:absolute;
+            z-index:-1;
+            inset:-40px;
+            background:
+                    radial-gradient(ellipse at 50% 25%,#ff9bd222,transparent 55%),
+                    radial-gradient(ellipse at 50% 85%,#62f3ff18,transparent 55%);
+            pointer-events:none;
+            animation:glowPulse 3s ease-in-out infinite alternate;
+        }
+
+        .love-title {
+            font-size:clamp(30px,8vw,47px);
+            overflow-wrap:anywhere;
+        }
+
+        .love-letter {
+            padding:22px 18px;
+            margin:22px 0;
+            border:1px solid #ff9bd247;
+            border-radius:22px;
+            background:linear-gradient(145deg,#ff9bd210,#85d7ff09);
+            box-shadow:0 0 35px #ff9bd20b,inset 0 1px #ffffff0c;
+        }
+
+        .love-letter p { margin:15px 0; }
+        .love-letter p:last-child { margin-bottom:0; }
+
+        .heart-seal {
+            width:82px;height:82px;
+            margin:18px auto 24px;
+            display:grid;
+            place-items:center;
+            border:1px solid #ff9bd266;
+            border-radius:28px;
+            background:linear-gradient(135deg,#ff9bd224,#62f3ff15);
+            box-shadow:0 0 45px #ff9bd225;
+            font-size:39px;
+            animation:heartBeat 1.4s ease-in-out infinite;
+        }
+
+        .success-mark {
+            width:58px;height:58px;
+            margin:20px auto;
+            display:grid;
+            place-items:center;
+            color:var(--green);
+            border:1px solid #79ffd15c;
+            border-radius:20px;
+            background:#79ffd110;
+            font-size:28px;
+            box-shadow:0 0 35px #79ffd115;
+        }
+
+        .note-box {
+            padding:18px;
+            margin:20px 0;
+            text-align:center;
+            border:1px solid #85d7ff25;
+            border-radius:17px;
+            background:#85d7ff08;
+        }
+        .note-box p { margin-bottom:0; }
+
+        .divider {
+            height:1px;
+            margin:23px 0;
+            background:linear-gradient(90deg,transparent,#85d7ff30,transparent);
+        }
+
+        .game-board {
+            width:min(100%,330px);
+            margin:22px auto;
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:9px;
+        }
+
+        .cell {
+            aspect-ratio:1;
+            display:grid;
+            place-items:center;
+            color:var(--cyan);
+            border:1px solid #85d7ff35;
+            border-radius:17px;
+            background:linear-gradient(145deg,#1b2850,#10152f);
+            font:700 clamp(32px,8vw,46px) 'Outfit',sans-serif;
+            cursor:pointer;
+            transition:background .2s,transform .2s,border-color .2s;
+        }
+        .cell:not(:disabled):hover {
+            transform:translateY(-2px);
+            border-color:var(--cyan);
+            background:#263961;
+        }
+        .cell:disabled { cursor:default; }
+        .cell.bot { color:var(--pink); }
+        .cell.winner {
+            background:#79ffd120;
+            border-color:var(--green);
+            box-shadow:0 0 20px #79ffd115;
+        }
+
+        .game-status {
+            min-height:27px;
+            color:var(--cyan);
+            font-size:14px;
+            font-weight:600;
+            text-align:center;
+        }
+
+        .game-legend {
+            display:flex;
+            justify-content:center;
+            gap:22px;
+            color:var(--muted);
+            font-size:12px;
+        }
+
+        .footer {
+            padding:18px 0 0;
+            color:#7583a8;
+            font-size:10px;
+            letter-spacing:1.2px;
+            text-align:center;
+        }
+
+        .sparkle {
+            position:fixed;
+            z-index:0;
+            pointer-events:none;
+            opacity:.45;
+            animation:twinkle 3s infinite ease-in-out;
+        }
+
+        .floating-heart {
+            position:fixed;
+            z-index:99;
+            bottom:-40px;
+            pointer-events:none;
+            animation:heartRise var(--duration,4s) ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity:0;transform:translateY(12px); }
+            to { opacity:1;transform:translateY(0); }
+        }
+        @keyframes romanticSlide {
+            0% { opacity:0;transform:translateX(100%) scale(.96);filter:blur(5px); }
+            65% { opacity:1;transform:translateX(-2%) scale(1.005);filter:blur(0); }
+            100% { opacity:1;transform:translateX(0) scale(1);filter:blur(0); }
+        }
+        @keyframes float {
+            0%,100% { transform:translateY(0) rotate(-2deg); }
+            50% { transform:translateY(-8px) rotate(2deg); }
+        }
+        @keyframes blink {
+            0%,100% { opacity:1; }
+            50% { opacity:.4; }
+        }
+        @keyframes drift {
+            from { transform:translate(0,0); }
+            to { transform:translate(45px,35px); }
+        }
+        @keyframes twinkle {
+            0%,100% { opacity:.15;transform:scale(.8); }
+            50% { opacity:.8;transform:scale(1.2); }
+        }
+        @keyframes glowPulse {
+            from { opacity:.5; }
+            to { opacity:1; }
+        }
+        @keyframes heartBeat {
+            0%,100% { transform:scale(1); }
+            50% { transform:scale(1.08); }
+        }
+        @keyframes heartRise {
+            0% { transform:translateY(0) rotate(0deg);opacity:0; }
+            10% { opacity:1; }
+            100% { transform:translateY(-115vh) rotate(35deg);opacity:0; }
+        }
+
+        @media(max-width:420px) {
+            .card { border-radius:22px; }
+            .brand { letter-spacing:1px;font-size:10px; }
+            .status { font-size:9px; }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            *,*::before,*::after {
+                animation-duration:.01ms !important;
+                animation-iteration-count:1 !important;
+                scroll-behavior:auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="orb one"></div>
+<div class="orb two"></div>
+
+<div class="app">
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">♡</div>
+            <span>PROJECT KUNJAL</span>
+        </div>
+        <div class="status">
+            <span class="status-dot"></span>
+            SYSTEM ONLINE
+        </div>
+    </header>
+
+    <main class="card">
+
+        <!-- WELCOME -->
+        <section id="welcome" class="center fade-in">
+            <div class="eyebrow">A little universe, made for you</div>
+            <div class="hero-icon">🩵</div>
+            <h1>Hey there,<br><span>cutie.</span></h1>
+            <p class="subtitle">
+                Someone made a tiny digital world just for you.
+                Four little questions stand between you and your surprise. 👀
+            </p>
+            <button class="button" onclick="startQuiz()">
+                Enter your little universe ✨
+            </button>
+            <p style="font-size:11px;margin-top:17px">
+                ✦ Best experienced with your curiosity switched ON ✦
+            </p>
+        </section>
+
+        <!-- QUIZ -->
+        <section id="quiz" class="hidden">
+            <div class="eyebrow">Personal recognition sequence</div>
+
+            <div class="progress-row">
+                <span id="progressLabel">QUESTION 01 / 04</span>
+                <span id="progressPercent">0% COMPLETE</span>
+            </div>
+            <div class="progress-track">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+
+            <div class="hero-icon" id="questionIcon">💌</div>
+            <div class="question-tag" id="questionTag">IDENTITY CHECK</div>
+            <h2 id="questionText" class="question">What's your name, cutie?</h2>
+            <p id="questionHint">Come on, don't be shy. Type it below. 😉</p>
+
+            <form id="answerForm">
+                <input id="answerInput" class="input" type="text"
+                       placeholder="Your answer goes here..."
+                       autocomplete="off" maxlength="100" required>
+                <button id="submitButton" class="button" type="submit">
+                    Lock in my answer ✨
+                </button>
+            </form>
+
+            <div id="feedback" class="feedback" aria-live="polite"></div>
+            <p class="center" style="font-size:11px">
+                Don't worry, cutie. You can try again. 🩵
+            </p>
+        </section>
+
+        <!-- QUIZ COMPLETE -->
+        <section id="finish" class="hidden center">
+            <div class="eyebrow">Recognition complete</div>
+            <div class="success-mark">✓</div>
+            <h1>Well done,<br><span id="finishName">Kunjal</span>! 🩵</h1>
+            <p class="subtitle">
+                All answers verified. You've officially unlocked the
+                next level of this little universe.
+            </p>
+
+            <div class="note-box">
+                <div style="font-size:28px">💗 ✨ 💗</div>
+                <h2>A tiny reminder</h2>
+                <p>You deserve happy days, lovely surprises,
+                    and plenty of reasons to smile.</p>
+            </div>
+
+            <button class="button" onclick="showGame()">
+                Unlock the secret mini-game 🎮
+            </button>
+        </section>
+
+        <!-- TIC-TAC-TOE -->
+        <section id="game" class="hidden center">
+            <div class="eyebrow">Bonus level unlocked</div>
+            <div class="hero-icon">🤖</div>
+            <h1>Beat the <span>Bot.</span></h1>
+            <p class="subtitle">
+                Tic-tac-toe challenge! You're 🩵 and the bot is 💗.
+                Get three in a row to win. Think you can beat it?
+            </p>
+
+            <div class="game-legend">
+                <span>YOU · 🩵 X</span>
+                <span>BOT · 💗 O</span>
+            </div>
+
+            <div class="game-board" role="group" aria-label="Tic-tac-toe board">
+                <button class="cell" data-index="0" aria-label="Cell 1"></button>
+                <button class="cell" data-index="1" aria-label="Cell 2"></button>
+                <button class="cell" data-index="2" aria-label="Cell 3"></button>
+                <button class="cell" data-index="3" aria-label="Cell 4"></button>
+                <button class="cell" data-index="4" aria-label="Cell 5"></button>
+                <button class="cell" data-index="5" aria-label="Cell 6"></button>
+                <button class="cell" data-index="6" aria-label="Cell 7"></button>
+                <button class="cell" data-index="7" aria-label="Cell 8"></button>
+                <button class="cell" data-index="8" aria-label="Cell 9"></button>
+            </div>
+
+            <div id="gameStatus" class="game-status" aria-live="polite">
+                Your move, champion! ✨
+            </div>
+
+            <button class="button" style="margin-top:15px" onclick="resetGame()">
+                Play again ↻
+            </button>
+        </section>
+
+        <!-- NEW AUTOMATIC SLIDING LOVE LETTER -->
+        <section id="loveReveal" class="hidden center">
+            <div class="eyebrow">✦ SECRET LEVEL UNLOCKED ✦</div>
+
+            <div class="heart-seal">💗</div>
+
+            <h1 class="love-title">
+                YOU WONNN,<br>
+                <span>MY FAVOURITE HUMAN!</span>
+            </h1>
+
+            <p class="subtitle">
+                Kunjal, you beat the bot! 🏆
+                But wait... your real surprise is right here. 🥹🩵
+            </p>
+
+            <div class="love-letter">
+                <div style="font-size:30px">💗 💌 💗</div>
+
+                <h2 class="love-title" style="color:var(--pink)">
+                    I LOVE U KUNJALLLLLLL
+                    <br>
+                    VERY MUCHHHHHH!! 🩵
+                </h2>
+
+                <div class="divider"></div>
+
+                <p>
+                    Okay, miss gamer... how are you this cute AND
+                    good at games? That's honestly unfair competition. 🙄💗
+                </p>
+
+                <p>
+                    If being adorable were a game, you'd win without
+                    even pressing a button. 🎮✨
+                </p>
+
+                <p>
+                    You just unlocked the rarest achievement:
+                    <strong style="color:var(--pink)">
+                        being ridiculously special. ♡
+                    </strong>
+                </p>
+
+                <p>
+                    If I could give you one thing, it would be the
+                    ability to see yourself the way the people who care
+                    about you see you. You'd understand how appreciated
+                    you are. 🩵
+                </p>
+
+                <div class="divider"></div>
+
+                <h2 style="color:var(--pink)">One last virtual hug? 🫶</h2>
+
+                <p>
+                    Sending you unlimited smiles, a pocket full of stars,
+                    and the biggest virtual hug everrr. 🌙🩵
+                </p>
+
+                <p>
+                    May your days have fairytale-level magic,
+                    Roblox-level fun, and a million reasons to smile. 📚🎮
+                </p>
+
+                <div style="font-size:30px;margin:22px 0">
+                    🩵 ✨ 💗 ✨ 🩵
+                </div>
+
+                <p style="color:var(--cyan);font-weight:600">
+                    Made with extra care, just for you,
+                    Kunjal Negi. ♡
+                </p>
+            </div>
+
+            <button class="button" onclick="launchHearts()">
+                MORE SPARKLES, PLEASE! ✨
+            </button>
+
+            <p style="font-size:11px;margin-top:18px">
+                P.S. You can officially brag about beating the bot now. 😌💗
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        MADE OF PIXELS, LITTLE MOMENTS & A LOT OF HEART ♡
+    </footer>
+</div>
+
+<script>
+    "use strict";
+
+    const questions = [
+        {
+            tag:"IDENTITY CHECK",
+            icon:"💌",
+            question:"What's your name, cutie?",
+            hint:"Surely you know the star of this little universe. 😉",
+            placeholder:"Tell me your name...",
+            answers:["kunjal","kunjal negi"],
+            success:"Correct! The star has arrived. 🩵"
+        },
+        {
+            tag:"COLOUR FREQUENCY",
+            icon:"🩵",
+            question:"Which colour matches your vibe?",
+            hint:"A little hint: think of a dreamy sky. ☁️",
+            placeholder:"Your favourite colour...",
+            answers:["light blue","lightblue","baby blue","babyblue"],
+            success:"Yesss! The prettiest sky-colour. ☁️"
+        },
+        {
+            tag:"STORYBOOK SCAN",
+            icon:"📚",
+            question:"Which book has your heart?",
+            hint:"A little fairytale with a broken heart in its name... 👀",
+            placeholder:"Name that book...",
+            answers:[
+                "once upon a broken heart",
+                "once upon a brokenheart"
+            ],
+            success:"Bookworm energy detected! 📖✨"
+        },
+        {
+            tag:"GAMER PROFILE",
+            icon:"🎮",
+            question:"What's your favourite game, cutie?",
+            hint:"Time to reveal your gamer side. 😉",
+            placeholder:"Your favourite game...",
+            answers:["roblox","roblox game"],
+            success:"ROBLOX CONFIRMED! Gamer queen unlocked. 🎮"
+        }
+    ];
+
+    let questionIndex = 0;
+    let userName = "Kunjal";
+    let movingForward = false;
+
+    const $ = id => document.getElementById(id);
+
+    const screenIds = ["welcome","quiz","finish","game","loveReveal"];
+
+    function showScreen(screenId) {
+        screenIds.forEach(id => {
+            $(id).classList.add("hidden");
+            $(id).classList.remove("slide-in");
+        });
+
+        const screen = $(screenId);
+        screen.classList.remove("hidden");
+
+        if (screenId === "loveReveal") {
+            // Animate the love letter sliding in from the right.
+            void screen.offsetWidth;
+            screen.classList.add("slide-in");
+
+            // Bring the new screen into view.
+            window.scrollTo({top:0,behavior:"smooth"});
+        } else {
+            screen.classList.add("fade-in");
+        }
+    }
+
+    function startQuiz() {
+        questionIndex = 0;
+        movingForward = false;
+        showScreen("quiz");
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const q = questions[questionIndex];
+
+        $("questionTag").textContent = q.tag;
+        $("questionIcon").textContent = q.icon;
+        $("questionText").textContent = q.question;
+        $("questionHint").textContent = q.hint;
+        $("answerInput").placeholder = q.placeholder;
+        $("answerInput").value = "";
+        $("feedback").textContent = "";
+        $("feedback").className = "feedback";
+        $("submitButton").disabled = false;
+        $("submitButton").textContent = "Lock in my answer ✨";
+
+        const number = String(questionIndex + 1).padStart(2,"0");
+        $("progressLabel").textContent = `QUESTION ${number} / 04`;
+        $("progressPercent").textContent =
+            `${Math.round(questionIndex / questions.length * 100)}% COMPLETE`;
+        $("progressFill").style.width =
+            `${questionIndex / questions.length * 100}%`;
+
+        $("answerInput").focus();
+    }
+
+    function normalize(value) {
+        return value.toLowerCase()
+            .trim()
+            .replace(/[^\p{L}\p{N}\s]/gu,"")
+            .replace(/\s+/g," ");
+    }
+
+    $("answerForm").addEventListener("submit",event => {
+        event.preventDefault();
+        if (movingForward) return;
+
+        const input = $("answerInput");
+        const answer = normalize(input.value);
+
+        if (!answer) {
+            $("feedback").textContent = "Pssst... give me an answer first! 💗";
+            $("feedback").className = "feedback bad";
+            return;
+        }
+
+        const q = questions[questionIndex];
+        const correct = q.answers.some(a => normalize(a) === answer);
+
+        if (!correct) {
+            $("feedback").textContent =
+                "Nopeee, cutie! That's not it. Try again. 😉💗";
+            $("feedback").className = "feedback bad";
+            input.select();
+            return;
+        }
+
+        movingForward = true;
+        $("feedback").textContent = q.success;
+        $("feedback").className = "feedback good";
+        $("submitButton").textContent = "Correct! Loading next level...";
+        $("submitButton").disabled = true;
+
+        if (questionIndex === 0) {
+            userName = input.value.trim();
+            $("finishName").textContent = userName;
+        }
+
+        $("progressFill").style.width =
+            `${(questionIndex + 1) / questions.length * 100}%`;
+        $("progressPercent").textContent =
+            `${Math.round((questionIndex + 1) / questions.length * 100)}% COMPLETE`;
+
+        setTimeout(() => {
+            questionIndex++;
+            movingForward = false;
+
+            if (questionIndex < questions.length) {
+                renderQuestion();
+            } else {
+                $("finishName").textContent = userName;
+                showScreen("finish");
+            }
+        },1000);
+    });
+
+    function showGame() {
+        showScreen("game");
+        resetGame();
+    }
+
+    /* Tic-tac-toe: player is X, bot is O. */
+    let board = Array(9).fill("");
+    let gameOver = false;
+    let botThinking = false;
+
+    const winningLines = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+    ];
+
+    const cells = Array.from(document.querySelectorAll(".cell"));
+
+    cells.forEach(cell => {
+        cell.addEventListener("click",() => {
+            const index = Number(cell.dataset.index);
+
+            if (gameOver || botThinking || board[index]) return;
+
+            board[index] = "X";
+            renderBoard();
+
+            const result = getResult(board);
+            if (result) {
+                finishGame(result);
+                return;
+            }
+
+            botThinking = true;
+            $("gameStatus").textContent = "Bot is thinking... 🤖";
+            setBoardDisabled(true);
+
+            setTimeout(() => {
+                if (gameOver) return;
+
+                const move = chooseBotMove();
+                if (move !== -1) board[move] = "O";
+
+                renderBoard();
+                botThinking = false;
+
+                const botResult = getResult(board);
+                if (botResult) {
+                    finishGame(botResult);
+                } else {
+                    $("gameStatus").textContent = "Your move, champion! ✨";
+                    setBoardDisabled(false);
+                }
+            },450);
+        });
+    });
+
+    function getResult(state) {
+        for (const line of winningLines) {
+            const [a,b,c] = line;
+            if (state[a] && state[a] === state[b] && state[b] === state[c]) {
+                return {winner:state[a],line};
+            }
+        }
+
+        if (state.every(Boolean)) return {winner:"draw",line:[]};
+        return null;
+    }
+
+    function chooseBotMove() {
+        let move = findTacticalMove("O");
+        if (move !== -1) return move;
+
+        move = findTacticalMove("X");
+        if (move !== -1) return move;
+
+        if (!board[4]) return 4;
+
+        const corners = [0,2,6,8].filter(i => !board[i]);
+        if (corners.length) {
+            return corners[Math.floor(Math.random() * corners.length)];
+        }
+
+        const open = board.map((v,i) => v ? -1 : i).filter(i => i !== -1);
+        return open.length
+            ? open[Math.floor(Math.random() * open.length)]
+            : -1;
+    }
+
+    function findTacticalMove(symbol) {
+        for (let i = 0; i < board.length; i++) {
+            if (board[i]) continue;
+
+            board[i] = symbol;
+            const result = getResult(board);
+            board[i] = "";
+
+            if (result && result.winner === symbol) return i;
+        }
+        return -1;
+    }
+
+    function renderBoard() {
+        cells.forEach((cell,i) => {
+            cell.textContent =
+                board[i] === "X" ? "🩵" :
+                    board[i] === "O" ? "💗" : "";
+
+            cell.classList.toggle("bot",board[i] === "O");
+            cell.disabled = Boolean(board[i]) || gameOver || botThinking;
+            cell.setAttribute("aria-label",
+                `Cell ${i + 1}${board[i] ? ": " + board[i] : ""}`);
+        });
+    }
+
+    function setBoardDisabled(disabled) {
+        cells.forEach((cell,i) => {
+            cell.disabled = disabled || gameOver || Boolean(board[i]);
+        });
+    }
+
+    function finishGame(result) {
+        gameOver = true;
+        setBoardDisabled(true);
+
+        if (result.winner !== "draw") {
+            result.line.forEach(i => cells[i].classList.add("winner"));
+        }
+
+        if (result.winner === "X") {
+            $("gameStatus").textContent =
+                "YOU WONNN!! CHAMPION ENERGY! 🏆🩵";
+
+            // Automatically slide into the love letter after her victory.
+            setTimeout(() => {
+                showScreen("loveReveal");
+                launchHearts();
+            },1600);
+
+        } else if (result.winner === "O") {
+            $("gameStatus").textContent =
+                "The bot won this round! Rematch, cutie? 🤖💗";
+        } else {
+            $("gameStatus").textContent =
+                "It's a draw! One more round, champion? ✨";
+        }
+    }
+
+    function resetGame() {
+        board = Array(9).fill("");
+        gameOver = false;
+        botThinking = false;
+
+        cells.forEach(cell => cell.classList.remove("winner"));
+        $("gameStatus").textContent = "Your move, champion! ✨";
+        renderBoard();
+    }
+
+    /* Floating hearts for the winning reveal. */
+    function launchHearts() {
+        const symbols = ["💗","🩵","♡","✨","💖","✦"];
+
+        for (let i = 0; i < 32; i++) {
+            const heart = document.createElement("span");
+            heart.className = "floating-heart";
+            heart.textContent =
+                symbols[Math.floor(Math.random() * symbols.length)];
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (16 + Math.random() * 18) + "px";
+            heart.style.setProperty("--duration",(3 + Math.random() * 2) + "s");
+
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(),5500);
+        }
+    }
+
+    /* Subtle background stars. */
+    for (let i = 0; i < 12; i++) {
+        const star = document.createElement("span");
+        star.className = "sparkle";
+        star.textContent = i % 3 === 0 ? "✦" : "·";
+        star.style.left = `${Math.random() * 96}%`;
+        star.style.top = `${Math.random() * 96}%`;
+        star.style.animationDelay = `${Math.random() * 3}s`;
+        star.style.fontSize = `${10 + Math.random() * 12}px`;
+        document.body.appendChild(star);
+    }
+</script>
+</body>
+</html>
